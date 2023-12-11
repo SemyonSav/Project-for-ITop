@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Новости</title>
+</head>
+<body>
+    <h1><a href="{% url 'main' %}">Новостной портал города</a></h1>
+    <nav>
+        {% if user.is_anonymous %}
+            <div style="text-align: right">
+                <a href="{% url 'registration' %}">Регистрация</a>
+                <a href="{% url 'auth' %}">Авторизация</a>
+            </div>
+        {% else %}
+            <a href="{% url 'main' %}">Новости</a>
+            <a href="{% url 'news_add' %}">Написать новость</a>
+            <a href="{% url 'saved' %}">Избранное</a>
+            <div style="text-align: right">
+                {% if not user.is_anonymous %}
+                    Вы авторизованы как <b>{{ user.username }}</b>
+                {% endif %}
+                <a href="{% url 'logout' %}">Выход</a>
+            </div>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
