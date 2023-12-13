@@ -1,4 +1,22 @@
 {% extends 'web/base.html' %}
 {% block content %}
+    <ul>
+        {% for cur_news in news %}
+            <li>
+                <b>{{ cur_news.title }}</b> – {{ cur_news.post_date }}
+                <small>
+                    {% if cur_news.tags.all %}
+                        [{{ cur_news.tags_count }}: {% for tag in cur_news.tags.all %} {{ tag.title }} {% endfor %}]
 
+                    {% endif %}
+
+                    {{ cur_news.user.username }}
+                </small>
+                <br>
+                <small>
+                    <a href="{% url 'news_delete' cur_news.id %}">удалить</a>
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

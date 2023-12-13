@@ -1,7 +1,19 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
+from web.models import News
+
 User = get_user_model()
+
+
+class NewsForm(forms.ModelForm):
+    def save(self, commit=True):
+        self.instance.user = self.initial['user']
+        return super().save(commit)
+
+    class Meta:
+        model = News
+        fields = ('title', 'tags', 'text')
 
 
 class RegistrationForm(forms.ModelForm):
